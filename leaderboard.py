@@ -2,8 +2,6 @@ import ast
 import simulation
 import classes
 from operator import itemgetter
-from collections import defaultdict
-
 
 
 # Calculates score of team and saves to file
