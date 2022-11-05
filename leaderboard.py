@@ -176,3 +176,18 @@ def scores_file_to_dict():
             scores_dict = dict(scores_data)
         f.close()
     return scores_dict
+
+
+# Formats team into data string and calls leaderboard function
+def get_score(team, turn):
+    team_str = ""
+    team_str = team_str + str(turn) + " "
+    for pet in team:
+        team_str = team_str + str(pet.name) + " "
+        team_str = team_str + str(pet.attack) + " "
+        team_str = team_str + str(pet.health) + " "
+        team_str = team_str + str(pet.level) + " "
+        team_str = team_str + str(pet.exp) + " "
+        team_str = team_str + str(pet.pos) + " "
+        team_str = team_str + str(pet.held) + " "
+    return add_to_leaderboard(team_str)

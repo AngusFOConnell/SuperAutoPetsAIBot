@@ -10,21 +10,30 @@ def all_actions(shop, team):
 
     if gold > 3:
 
+        pos_count = 0
+
         # Buy Shop Pet onto team
         if len(team) < 5:
             for pet in pets:
-                actions.append(["buy_pet", pet, len(team)])
+                actions.append(["buy_pet", pet, len(team), pos_count])
+                pos_count += 1
+
+        pos_count = 0
 
         # level an existing pet on team from pet in shop
         for shop_pet in pets:
             for team_pet in team:
                 if shop_pet.name == team_pet.name and team_pet.level < 3:
-                    actions.append(["level", shop_pet, team_pet.pos])
+                    actions.append(["level", shop_pet, team_pet.pos, pos_count])
+            pos_count += 1
+
+        pos_count = 0
 
         # Buy food from shop
         for food in foods:
             for pet in team:
-                actions.append(["buy_food", food, pet.pos])
+                actions.append(["buy_food", food, pet.pos, pos_count])
+            pos_count += 1
 
     # Sell pet on team
     for pet in team:

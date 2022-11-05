@@ -4,6 +4,9 @@ import classes
 
 
 # Simulates a turn/battle between two teams
+import print_helpers
+
+
 def turn(team_1, team_2):
     # Used to print debug information
     debug = False
@@ -14,9 +17,9 @@ def turn(team_1, team_2):
     draw = 0
 
     # Controls how many battles to simulate between the two teams
-    number_of_battles = 1000
+    number_of_battles = 50
 
-    for battle in range(0, 1000):
+    for battle in range(0, number_of_battles):
         team1 = copy.deepcopy(team_1)
         team2 = copy.deepcopy(team_2)
         if debug:
@@ -1309,8 +1312,6 @@ def simulate_action(action, team, shop):
     temp_team = copy.deepcopy(team)
     temp_shop = copy.deepcopy(shop)
 
-    gold = temp_shop[2]
-
     # Buy abilities
     if action[0] == "buy_pet":
         (temp_team, temp_shop) = buy_pet(action, temp_team, temp_shop)
@@ -1329,15 +1330,20 @@ def simulate_action(action, team, shop):
 
     # Roll
     if action[0] == "roll":
-        gold -= 1
+        temp_shop[2] = temp_shop[2] - 1
 
-    return temp_team, temp_shop
+    return temp_team, temp_shop[0], temp_shop[1], temp_shop[2]
 
 
 # Buy abilities
 def buy_pet(action, team, shop):
 
-    pet = action[1]
+    if action[0] == "buy_pet":
+        pet = action[1]
+        level = 1
+    else:
+        pet = team[action[2]]
+        level = pet.level
 
     # Otter ability - Buy → Give 1/2/3 random friend(s) +1 attack and +1 health.
     if pet.name == "otter":
@@ -1346,7 +1352,7 @@ def buy_pet(action, team, shop):
             for other_pet in team:
                 if other_pet is not pet:
                     friendly_pets.append(other_pet)
-            choices = random.sample(friendly_pets, pet.level)
+            choices = random.sample(friendly_pets, min(len(friendly_pets), level))
             for buff_target in choices:
                 buff_target.attack = buff_target.attack + 1
                 buff_target.health = buff_target.health + 1
@@ -1362,6 +1368,7 @@ def buy_pet(action, team, shop):
                 pet.attack = pet.attack + other_pet.level
 
         team.append(classes.Pet(pet.name, pet.attack, pet.health, 1, 0, action[2], None))
+        shop[0].pop(action[3])
         team = sort_team(team)
 
     return team, shop
@@ -1421,6 +1428,8 @@ def level(action, team, shop):
                     other_pet.health = other_pet.health + team_pet.level
                     other_pet.attack = other_pet.attack + team_pet.level
 
+    shop[0].pop(action[3])
+
     # Buy abilities
     (team, shop) = buy_pet(action, team, shop)
 
@@ -1442,7 +1451,7 @@ def buy_food(action, team, shop):
     elif food.name == "honey":
         team[action[2]].held = "honey"
 
-    shop[1].remove(food)
+    shop[1].pop(action[3])
 
     return team, shop
 
