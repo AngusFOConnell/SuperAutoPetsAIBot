@@ -2,6 +2,8 @@ import ast
 import simulation
 import classes
 from operator import itemgetter
+from collections import defaultdict
+
 
 
 # Calculates score of team and saves to file
@@ -12,6 +14,9 @@ def add_to_leaderboard(team):
 
     # Gets data from file and adds to dictionary
     leaderboard_dict = file_to_dict()
+
+    # Checks to see if the team is already in the document (Therefore only need to retrieve score instead of calculating any scores)
+    on_file = False
 
     # Grabs the teams of given turn
     if team_turn in leaderboard_dict.keys():
@@ -93,6 +98,12 @@ def add_to_leaderboard(team):
 
                     team2.append(classes.Pet(name, int(health), int(attack), int(level), int(exp), int(pos), held))
 
+            # Checks if team already stored on file
+            if team1 == team2:
+                team1_score = team2_score
+                on_file = True
+                break
+
             # Simulates battle between given team and each team on file
             (team1_win, team2_win, draw) = simulation.turn(team1, team2)
 
@@ -103,21 +114,27 @@ def add_to_leaderboard(team):
             team2_score = team2_score + team2_win - (team1_win * loss_weight)
             team[-1] = team2_score
 
-        team_data.append(team1_score)
-        leaderboard_dict[team_turn].append(team_data)
+        # Only adds the score if team is not on file
+        if not on_file:
+            team_data.append(team1_score)
+            leaderboard_dict[team_turn].append(team_data)
     else:
         team_data.append("0")
         leaderboard_dict[team_turn] = [team_data]
+        team1_score = 0
 
     # Writes the updated teams/scores to file
-    with open("leaderboard.txt", "w") as f:
-        for key in leaderboard_dict.keys():
-            teams = leaderboard_dict[key]
-            leaderboard_dict[key] = sorted(teams, reverse=True, key=itemgetter(-1))
+    if not on_file:
+        with open("leaderboard.txt", "w") as f:
+            for key in leaderboard_dict.keys():
+                teams = leaderboard_dict[key]
+                leaderboard_dict[key] = sorted(teams, reverse=True, key=itemgetter(-1))
 
-        file_data = list(leaderboard_dict.items())
-        f.write(str(file_data))
-        f.close()
+            file_data = list(leaderboard_dict.items())
+            f.write(str(file_data))
+            f.close()
+
+    return team1_score
 
 
 # Transfers the data on file to dictionary variable
