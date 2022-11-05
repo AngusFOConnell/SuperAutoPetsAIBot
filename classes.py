@@ -21,3 +21,24 @@ class Pet:
             self.triggers = 3
         else:
             self.triggers = None
+
+
+# Stores information for pets that are in the shop
+class ShopPet:
+    def __init__(self, name, attack, health):
+        self.name = name
+        self.attack = attack
+        self.health = health
+
+        # Used for future implementation
+        self.frozen = False
+
+
+# Stores information for food that is in the shop
+class ShopFood:
+    def __init__(self, name):
+        self.name = name
+
+        # Used for future implementation
+        self.frozen = False
+
