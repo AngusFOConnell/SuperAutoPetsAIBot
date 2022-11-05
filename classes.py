@@ -42,3 +42,25 @@ class ShopFood:
         # Used for future implementation
         self.frozen = False
 
+
+# Node and children of action tree
+class Tree:
+    def __init__(self, action, score):
+        self.action = action
+        self.score = score
+        # Children trees
+        self.children = []
+
+    # Add child to list of children
+    def add_child(self, tree):
+        self.children.append(tree)
+
+    # Prints tree
+    def __str__(self, level=0):
+        if self.action is not None:
+            ret = "\t" * level + self.action[0] + " " + self.action[1].name + " " + str(self.score) + "\n"
+        else:
+            ret = "\t" * level + str(self.action) + " " + str(self.score) + "\n"
+        for child in self.children:
+            ret += child.__str__(level + 1)
+        return ret
