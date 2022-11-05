@@ -1,5 +1,6 @@
-import random, copy, sys
-from classes import Pet
+import copy
+import random
+import classes
 
 
 # Simulates a turn/battle between two teams
@@ -550,7 +551,7 @@ def faint(team1, team2, team1_fainted, team2_fainted):
                 # Cricket ability - Faint → Summon one 1/1 / 2/2 / 3/3 Zombie Cricket.
                 if pet.name == "cricket":
                     if len(team1) < 5:
-                        summon = Pet("zombie_cricket", 1 * pet.level, 1 * level, level,
+                        summon = classes.Pet("zombie_cricket", 1 * pet.level, 1 * level, level,
                                      (level / 3) + 1, pet.pos, None)
                         team1 = [summon] + team1
                         team1_summons = [summon] + team1_summons
@@ -559,7 +560,7 @@ def faint(team1, team2, team1_fainted, team2_fainted):
                 # Deer ability - Faint → Summon one 5/5 / 10/10 / 15/15 Bus with Chilli
                 if pet.name == "deer":
                     if len(team1) < 5:
-                        summon = Pet("bus", 5 * level, 5 * level, level,
+                        summon = classes.Pet("bus", 5 * level, 5 * level, level,
                                      (level / 3) + 1, pet.pos, "chilli")
                         team1 = [summon] + team1
                         team1_summons = [summon] + team1_summons
@@ -569,7 +570,7 @@ def faint(team1, team2, team1_fainted, team2_fainted):
                 if pet.name == "sheep":
                     for ability_trigger in range(0, 2):
                         if len(team1) < 5:
-                            summon = Pet("ram", 2 * level, 2 * level, level,
+                            summon = classes.Pet("ram", 2 * level, 2 * level, level,
                                          (level / 3) + 1, pet.pos, None)
                             team1 = [summon] + team1
                             team1_summons = [summon] + team1_summons
@@ -580,10 +581,10 @@ def faint(team1, team2, team1_fainted, team2_fainted):
                     for ability_trigger in range(0, level):
                         if len(team1) < 5:
                             if pet.attack < 2:
-                                summon = Pet("chick", 1, 1, level,
+                                summon = classes.Pet("chick", 1, 1, level,
                                              (level / 3) + 1, pet.pos, None)
                             else:
-                                summon = Pet("chick", int(pet.attack / 2), 1, level,
+                                summon = classes.Pet("chick", int(pet.attack / 2), 1, level,
                                              (level / 3) + 1, pet.pos, None)
                             team1 = [summon] + team1
                             team1_summons = [summon] + team1_summons
@@ -594,7 +595,7 @@ def faint(team1, team2, team1_fainted, team2_fainted):
                     if len(team1) < 5:
                         tier_3 = ["blowfish", "camel", "dog", "dolphin", "giraffe", "kangaroo", "ox", "rabbit", "sheep",
                                   "snail"]
-                        summon = Pet(random.choice(tier_3), 2, 2, level,
+                        summon = classes.Pet(random.choice(tier_3), 2, 2, level,
                                      (level / 3) + 1, pet.pos, None)
                         team1 = [summon] + team1
                         team1_summons = [summon] + team1_summons
@@ -605,7 +606,7 @@ def faint(team1, team2, team1_fainted, team2_fainted):
                     for ability_trigger in range(0, min(level, 5 - len(team2))):
                         for team2_pet in team2:
                             team2_pet.pos = team2_pet.pos + 1
-                        summon = Pet("dirty_rat", 1, 1, level,
+                        summon = classes.Pet("dirty_rat", 1, 1, level,
                                      (level / 3) + 1, 0, None)
                         team2 = [summon] + team2
                         team2_summons = [summon] + team2_summons
@@ -647,7 +648,7 @@ def faint(team1, team2, team1_fainted, team2_fainted):
                         if pet.name != "zombie_fly":
                             if len(team1) < 5:
                                 if other_pet.triggers > 0:
-                                    summon = Pet("zombie_fly", 4 * level, 4 * level,
+                                    summon = classes.Pet("zombie_fly", 4 * level, 4 * level,
                                                  level,
                                                  (level / 3) + 1, pet.pos, None)
                                     team1 = [summon] + team1
@@ -665,7 +666,7 @@ def faint(team1, team2, team1_fainted, team2_fainted):
             # Mushroom - Come back as a 1/1 after fainting.
             if pet.held == "mushroom":
                 if len(team1) < 5:
-                    summon = Pet(pet.name, 1, 1, level,
+                    summon = classes.Pet(pet.name, 1, 1, level,
                                  (level / 3) + 1, pet.pos, None)
                     if summon.name == 'scorpion':
                         summon.held = "peanuts"
@@ -676,7 +677,7 @@ def faint(team1, team2, team1_fainted, team2_fainted):
             # Honey - Summon a 1/1 Honey Bee after fainting.
             elif pet.held == "honey":
                 if len(team1) < 5:
-                    summon = Pet("bee", 1, 1, level,
+                    summon = classes.Pet("bee", 1, 1, level,
                                  (level / 3) + 1, pet.pos, None)
                     team1 = [summon] + team1
                     team1_summons = [summon] + team1_summons
@@ -728,7 +729,7 @@ def faint(team1, team2, team1_fainted, team2_fainted):
                 # Cricket ability - Faint → Summon one 1/1 / 2/2 / 3/3 Zombie Cricket.
                 if pet.name == "cricket":
                     if len(team2) < 5:
-                        summon = Pet("zombie_cricket", 1 * level, 1 * level, level,
+                        summon = classes.Pet("zombie_cricket", 1 * level, 1 * level, level,
                                      (level / 3) + 1, pet.pos, None)
                         team2 = [summon] + team2
                         team2_summons = [summon] + team2_summons
@@ -737,7 +738,7 @@ def faint(team1, team2, team1_fainted, team2_fainted):
                 # Deer ability - Faint → Summon one 5/5 / 10/10 / 15/15 Bus with Chilli
                 if pet.name == "deer":
                     if len(team2) < 5:
-                        summon = Pet("bus", 5 * level, 5 * level, level,
+                        summon = classes.Pet("bus", 5 * level, 5 * level, level,
                                      (level / 3) + 1, pet.pos, "chilli")
                         team2 = [summon] + team2
                         team2_summons = [summon] + team2_summons
@@ -747,7 +748,7 @@ def faint(team1, team2, team1_fainted, team2_fainted):
                 if pet.name == "sheep":
                     for ability_trigger in range(0, 2):
                         if len(team2) < 5:
-                            summon = Pet("ram", 2 * level, 2 * level, level,
+                            summon = classes.Pet("ram", 2 * level, 2 * level, level,
                                          (level / 3) + 1, pet.pos, None)
                             team2 = [summon] + team2
                             team2_summons = [summon] + team2_summons
@@ -758,10 +759,10 @@ def faint(team1, team2, team1_fainted, team2_fainted):
                     for ability_trigger in range(0, level):
                         if len(team2) < 5:
                             if pet.attack < 2:
-                                summon = Pet("chick", 1, 1, level,
+                                summon = classes.Pet("chick", 1, 1, level,
                                              (level / 3) + 1, pet.pos, None)
                             else:
-                                summon = Pet("chick", int(pet.attack / 2), 1, level,
+                                summon = classes.Pet("chick", int(pet.attack / 2), 1, level,
                                              (level / 3) + 1, pet.pos, None)
                             team2 = [summon] + team2
                             team2_summons = [summon] + team2_summons
@@ -772,7 +773,7 @@ def faint(team1, team2, team1_fainted, team2_fainted):
                     if len(team2) < 5:
                         tier_3 = ["blowfish", "camel", "dog", "dolphin", "giraffe", "kangaroo", "ox", "rabbit", "sheep",
                                   "snail"]
-                        summon = Pet(random.choice(tier_3), 2, 2, level,
+                        summon = classes.Pet(random.choice(tier_3), 2, 2, level,
                                      (level / 3) + 1, pet.pos, None)
                         team2 = [summon] + team2
                         team2_summons = [summon] + team2_summons
@@ -783,7 +784,7 @@ def faint(team1, team2, team1_fainted, team2_fainted):
                     for ability_trigger in range(0, min(level, 5 - len(team2))):
                         for team2_pet in team1:
                             team2_pet.pos = team2_pet.pos + 1
-                        summon = Pet("dirty_rat", 1, 1, level,
+                        summon = classes.Pet("dirty_rat", 1, 1, level,
                                      (level / 3) + 1, 0, None)
                         team1 = [summon] + team1
                         team1_summons = [summon] + team1_summons
@@ -824,7 +825,7 @@ def faint(team1, team2, team1_fainted, team2_fainted):
                         if pet.name != "zombie_fly":
                             if len(team2) < 5:
                                 if other_pet.triggers > 0:
-                                    summon = Pet("zombie_fly", 4 * level, 4 * level,
+                                    summon = classes.Pet("zombie_fly", 4 * level, 4 * level,
                                                  level,
                                                  (level / 3) + 1, pet.pos, None)
                                     team2 = [summon] + team2
@@ -842,7 +843,7 @@ def faint(team1, team2, team1_fainted, team2_fainted):
             # Mushroom - Come back as a 1/1 after fainting.
             if pet.held == "mushroom":
                 if len(team2) < 5:
-                    summon = Pet(pet.name, 1, 1, pet.level,
+                    summon = classes.Pet(pet.name, 1, 1, pet.level,
                                  (pet.level / 3) + 1, pet.pos, None)
                     if summon.name == 'scorpion':
                         summon.held = "peanuts"
@@ -853,7 +854,7 @@ def faint(team1, team2, team1_fainted, team2_fainted):
             # Honey - Summon a 1/1 Honey Bee after fainting.
             elif pet.held == "honey":
                 if len(team2) < 5:
-                    summon = Pet("bee", 1, 1, pet.level,
+                    summon = classes.Pet("bee", 1, 1, pet.level,
                                  (pet.level / 3) + 1, pet.pos, None)
                     team2 = [summon] + team2
                     team2_summons = [summon] + team2_summons
@@ -1256,7 +1257,7 @@ def knockout(team1, team2, team1_attack, team2_attack):
     return team1, team2
 
 
-# Re-sort team based on position (Pet.pos) attribute
+# Re-sort team based on position (classes.Pet.pos) attribute
 def sort_team(team):
     team.sort(key=get_pos)
     i = 0
@@ -1297,3 +1298,152 @@ def tiger(pet, team):
             return 2, team[pet.pos].level
 
     return 1, None
+
+# ----------------------------------------------------------------------------------------------------------------------
+
+
+# Simulates changes to team from action
+def simulate_action(action, team, shop):
+    # shop = [[pets], [food], gold]
+
+    temp_team = copy.deepcopy(team)
+    temp_shop = copy.deepcopy(shop)
+
+    gold = temp_shop[2]
+
+    # Buy abilities
+    if action[0] == "buy_pet":
+        (temp_team, temp_shop) = buy_pet(action, temp_team, temp_shop)
+
+    # Sell abilities
+    if action[0] == "sell":
+        (temp_team, temp_shop) = sell(action, temp_team, temp_shop)
+
+    # Level abilities
+    if action[0] == "level":
+        (temp_team, temp_shop) = level(action, temp_team, temp_shop)
+
+    # Buy Food abilities
+    if action[0] == "buy_food":
+        (team, shop) = buy_food(action, temp_team, temp_shop)
+
+    # Roll
+    if action[0] == "roll":
+        gold -= 1
+
+    return temp_team, temp_shop
+
+
+# Buy abilities
+def buy_pet(action, team, shop):
+
+    pet = action[1]
+
+    # Otter ability - Buy → Give 1/2/3 random friend(s) +1 attack and +1 health.
+    if pet.name == "otter":
+        if len(team) > 0:
+            friendly_pets = []
+            for other_pet in team:
+                if other_pet is not pet:
+                    friendly_pets.append(other_pet)
+            choices = random.sample(friendly_pets, pet.level)
+            for buff_target in choices:
+                buff_target.attack = buff_target.attack + 1
+                buff_target.health = buff_target.health + 1
+
+    # Buy pet only mechanics - does not work for level-ups
+    if action[0] == "buy_pet":
+
+        shop[2] = shop[2] - 3
+
+        # Horse ability - Friend summoned → Give it +1/+2/+3 attack until end of battle
+        for other_pet in team:
+            if other_pet.name == "horse" and other_pet != pet:
+                pet.attack = pet.attack + other_pet.level
+
+        team.append(classes.Pet(pet.name, pet.attack, pet.health, 1, 0, action[2], None))
+        team = sort_team(team)
+
+    return team, shop
+
+
+# Sell abilities
+def sell(action, team, shop):
+
+    shop[2] += 1
+    pet = action[1]
+
+    # Remove pet from team
+    team.pop(action[2])
+    team = sort_team(team)
+
+    # Beaver ability - Give two random friends +1/+2/+3 health.
+    if pet.name == "beaver":
+        choices = random.sample(team, min(len(team), 2))
+        for buff_target in choices:
+            buff_target.health = buff_target.health + pet.level
+
+    # Pig ability - Gain +1/+2/+3 gold.
+    if pet.name == "pig":
+        shop[2] = shop[2] + pet.level
+
+    # Duck ability - Give shop pets +1/+2/+3 health.
+    if pet.name == "duck":
+        for shop_pet in shop[0]:
+            shop_pet.health = shop_pet.health + pet.level
+
+    return team, shop
+
+
+# Level-up abilities
+def level(action, team, shop):
+
+    shop[2] = shop[2] - 3
+    shop_pet = action[1]
+    team_pet = team[action[2]]
+
+    # Level-up mechanics
+    if team_pet.exp < 2:
+        team_pet.exp += 1
+        team_pet.attack += 1
+        team_pet.health += 1
+
+    elif team_pet.exp == 2:
+        team_pet.level += 1
+        team_pet.exp = 0
+        team_pet.attack += 1
+        team_pet.health += 1
+
+        # Fish ability - Level up → Give all friends +1/+2 attack and +1/+2 health.
+        if shop_pet.name == "fish":
+            for other_pet in team:
+                if other_pet is not team_pet:
+                    other_pet.health = other_pet.health + team_pet.level
+                    other_pet.attack = other_pet.attack + team_pet.level
+
+    # Buy abilities
+    (team, shop) = buy_pet(action, team, shop)
+
+    return team, shop
+
+
+# Buy food abilities
+def buy_food(action, team, shop):
+
+    shop[2] = shop[2] - 3
+    food = action[1]
+
+    # Apple - Give one pet +1 attack and +1 health
+    if food.name == "apple":
+        team[action[2]].attack += 1
+        team[action[2]].health += 1
+
+    # Honey - Summon a 1/1 Honey Bee after fainting
+    elif food.name == "honey":
+        team[action[2]].held = "honey"
+
+    shop[1].remove(food)
+
+    return team, shop
+
+
