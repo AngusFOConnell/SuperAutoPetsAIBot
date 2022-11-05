@@ -1,8 +1,3 @@
-import random
-import copy
-import classes
-
-
 # Generates all possible actions from given shop state
 def all_actions(shop, team):
     # shop = [[pets], [food], gold]
